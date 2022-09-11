@@ -1,45 +1,27 @@
-
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
-const HtmlWebPackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-module.exports = {
-  output: {
-    path: path.resolve(__dirname, 'dist'),
-  },
-  module: {
-    rules: [
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader',
-        },
-      },
-      {
-        test: /\.html$/,
-        use: [
-          {
-            loader: 'html-loader',
-          },
-        ],
-      },
-      {
+module.exports = {//задает путь куда будет сохраняться код
+    output: {
+        path: path.resolve(__dirname, 'dist'),//создает папку или указывает на существующую
+        filename: 'app.bundle.js'//создает файл js
+    },
+    module: {
+rules: [
+    {
+        test: /\.txt$/,
+        loader: 'raw-loader'
+    },
+    {
         test: /\.css$/,
-        use: [
-          MiniCssExtractPlugin.loader, 'css-loader',
-        ],
-      },
-    ],
-  },
-  plugins: [
-    new HtmlWebPackPlugin({
-      template: './src/index.html',
-      filename: './index.html',
-    }),
-    new MiniCssExtractPlugin({
-      filename: '[name].css',
-      chunkFilename: '[id].css',
-    }),
-  ],
-};
+        loader: 'css-loader'
+    }
+]
+    },
+    plugins: [
+        new HtmlWebpackPlugin({
+            template: './src/index.html'
+        })
+    ]
+    //entry: './src/index.js'
+}
